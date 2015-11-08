@@ -19,8 +19,13 @@ def greeting():
 @diary.route('/reading')
 def reading():
     diaryFile = open('diary.txt')
-    diary = diaryFile.read()
-    return diary
+    diaryContent = diaryFile.read()
+    diaryFile.close()
+    #    return diary
+    #output = template('read_diary',content=diaryContent)
+    diaryContent=diaryContent.replace('\n', '<br />')
+    output=diaryContent+"<br /><a href='/'>Back Home<a>"
+    return output
 
 @diary.route('/writing',method='GET')
 def writing():
@@ -34,6 +39,13 @@ def writing():
 
         conn.commit()
         c.close()'''
+        
+        today=datetime.now()
+        newDiary=request.GET.get('task', '').strip()
+     
+        diaryFile = open('diary.txt','a')
+        diaryFile.write('\n'+today.strftime("%y/%m/%d")+ ' '+newDiary)
+        diaryFile.close()
 
         return '''
 <p>The new diary was saved.</p>

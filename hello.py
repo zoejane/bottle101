@@ -1,4 +1,4 @@
-from bottle import route, run
+from bottle import Bottle,route, run
 
 app = Bottle()
 
@@ -13,4 +13,4 @@ def hello():
 # starts a built-in development server
 # The Debug Mode is very helpful during early development,
 # but should be switched off for public applications. 
-run(host='localhost', port=8080, debug=True)
+run(add,host='localhost', port=8080, debug=True)

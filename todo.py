@@ -1,5 +1,5 @@
 import sqlite3
-from bottle import route, run,debug,template,request
+from bottle import route, run,debug,template,request,static_file
 
 @route('/todo')
 def todo_list():
@@ -68,6 +68,9 @@ def show_item(item):
     else:
         return 'Task: %s' %result[0]
 
+@route('/help')
+def help():
+    return static_file('help.html', root='../help.html')
     
 @route('/hello')
 def hello():

@@ -22,7 +22,7 @@ def reading():
     diaryContent = diaryFile.read()
     diaryFile.close()
     diaryContent=diaryContent.replace('\n', '<br />')
-    output='<p>====日记====</p>'+diaryContent+"<br /><br /><a href='/'>Back Home<a>"
+    output='<p>====日记====</p>'+diaryContent+"<br /><br /><a href='/writing'>写日记<a><br /><a href='/'>Back Home<a>"
     return output
 
 @diary.route('/writing',method='GET')
@@ -47,6 +47,8 @@ def writing():
 
         return '''
 <p>The new diary was saved.</p>
+<a href='/writing'>写日记<a>
+<a href='/reading'>读日记<a>
 <a href='/'>Back Home<a>
 '''
     else:

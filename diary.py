@@ -21,10 +21,8 @@ def reading():
     diaryFile = open('diary.txt')
     diaryContent = diaryFile.read()
     diaryFile.close()
-    #    return diary
-    #output = template('read_diary',content=diaryContent)
     diaryContent=diaryContent.replace('\n', '<br />')
-    output=diaryContent+"<br /><a href='/'>Back Home<a>"
+    output='<p>====日记====</p>'+diaryContent+"<br /><br /><a href='/'>Back Home<a>"
     return output
 
 @diary.route('/writing',method='GET')

@@ -28,18 +28,9 @@ def reading():
 @diary.route('/writing',method='GET')
 def writing():
     if request.GET.get('save','').strip():
-        '''        new = request.GET.get('task', '').strip()
-        conn = sqlite3.connect('todo.db')
-        c = conn.cursor()
-
-        c.execute("INSERT INTO todo (task,status) VALUES (?,?)", (new,1))
-        new_id = c.lastrowid
-
-        conn.commit()
-        c.close()'''
         
         today=datetime.now()
-        newDiary=request.GET.get('task', '').strip()
+        newDiary=request.GET.get('newdiary', '').strip()
      
         diaryFile = open('diary.txt','a')
         diaryFile.write('\n'+today.strftime("%y/%m/%d")+ ' '+newDiary)
@@ -53,9 +44,5 @@ def writing():
 '''
     else:
         return template('new_diary.tpl')
-
-@diary.route('/hello')
-def hello():
-    return "Hello World!"
 
 run(diary,host='localhost', port=1234, debug=True)

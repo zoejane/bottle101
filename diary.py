@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from bottle import route,run,debug
+from bottle import Bottle,route,run,debug
 
 from datetime import datetime
 import sys
@@ -11,4 +11,4 @@ diary=Bottle()
 def hello():
     return "Hello World!"
 
-run(host='localhost', port=1234, debug=True)
+run(diary,host='localhost', port=1234, debug=True)

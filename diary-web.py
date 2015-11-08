@@ -9,12 +9,7 @@ diary=Bottle()
 @diary.route('/')
 @diary.route('/diary')
 def greeting():
-    return '''
-<p>哥哥，我是你的日记。</p>
-<p>你今天有什么想和我分享的吗？</p>
-<a href='/writing'>写日记<a>
-<a href='/reading'>读日记<a>
-'''
+    return template('greeting.tpl')
 
 @diary.route('/reading')
 def reading():

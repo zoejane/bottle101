@@ -1,11 +1,12 @@
 from bottle import route, run
 
+app = Bottle()
 
 # link the /hello path to the hello() function
 # Whenever a browser requests a URL,
 # the associated function is called
 # and the return value is sent back to the browser
-@route('/hello')
+@app.route('/hello')
 def hello():
     return "Hello World!"
 

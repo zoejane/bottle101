@@ -1,17 +1,23 @@
 # -*- coding: utf-8 -*-
-from bottle import route,run,debug
+from bottle import Bottle,route,run,debug
 
 from datetime import datetime
 import sys
 
+diary=Bottle()
 
-@route('/')
-@route('/diary')
-def diary():
-    return "哥哥，我是你的日记。"
+@diary.route('/')
+@diary.route('/diary')
+def greeting():
+    return '''
+<p>哥哥，我是你的日记。</p>
+<p>你今天有什么想和我分享的吗？</p>
+<a href='/writing'>写日记<a>
+<a href='/reading'>读日记<a>
+'''
 
-@route('/hello')
+@diary.route('/hello')
 def hello():
     return "Hello World!"
 
-run(host='localhost', port=1234, debug=True)
+run(diary,host='localhost', port=1234, debug=True)

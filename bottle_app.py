@@ -34,6 +34,34 @@ def checkSignature():
     else:
         return "error"
 
+@route('/wechat', method="POST") # mypath需要跟微信公众号里注册的信息一致
+def check_signature():
+    # 获取post请求body内容
+    data = request.body.read()
+
+    # 解析xml
+    import xml.etree.ElementTree as ET
+    root = ET.fromstring(data)
+    mydict = {child.tag:child.text for child in root}
+
+    # 更新时间
+    import time
+    mydict['CreateTime'] = int(time.time())
+
+    # 现在不对内容做任何操作，只是原样返回
+
+    # 重构xml
+    myxml = '''\
+    <xml>
+    <ToUserName><![CDATA[{}]]></ToUserName>
+    <FromUserName><![CDATA[{}]]></FromUserName>
+    <CreateTime>12345678</CreateTime>
+    <MsgType><![CDATA[text]]></MsgType>
+    <Content><![CDATA[{}]]></Content></xml>
+    '''.format(mydict['FromUserName'],mydict['ToUserName'],mydict['Content'])
+
+    return myxml
+
 @route('/',method='GET')
 @route('/<user_name>')
 def diary(user_name='小小游侠'):

@@ -44,11 +44,23 @@ def check_signature():
     root = ET.fromstring(data)
     mydict = {child.tag:child.text for child in root}
 
+    # 添加日记
+    today=datetime.now()
+    newDiary=mydict['Content']
+    user_name=mydict['FromUserName']
+
+    with open('diary.txt', 'r+') as f:
+        content = f.read()
+        f.seek(0, 0)
+        newDiaryLine=today.strftime("%Y/%m/%d/ %T")+ '  ['+user_name+'] '+newDiary
+        f.write(newDiaryLine.rstrip('\r\n') + '\n' + content)
+
     # 更新时间
     import time
     mydict['CreateTime'] = int(time.time())
+    # 更新回复内容
+    mydict['Content'] = mydict['Content']+'已保存'
 
-    # 现在不对内容做任何操作，只是原样返回
 
     # 重构xml
     myxml = '''\

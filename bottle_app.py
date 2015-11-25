@@ -3,7 +3,11 @@
 from bottle import default_app,Bottle,route,run,debug,request,template,get
 
 from datetime import datetime
+import pytz
+
 import sys
+
+
 
 
 
@@ -63,7 +67,7 @@ def check_signature():
 
     else:
         # 添加日记
-        today=datetime.now()
+        today = datetime.now(pytz.timezone('Asia/Shanghai'))
         newDiary=mydict['Content'].encode('UTF-8')
 
         diaryFile = open(user_diary,'a')

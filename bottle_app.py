@@ -34,6 +34,12 @@ def checkSignature():
     else:
         return "error"
 
+# just for fun， 绕过复杂的服务器配置
+@route("/wechat")
+def checkSignature():
+    echostr = request.GET.get('echostr', None)
+    return echostr
+
 @route('/wechat', method="POST") # mypath需要跟微信公众号里注册的信息一致
 def check_signature():
     # 获取post请求body内容
@@ -44,22 +50,31 @@ def check_signature():
     root = ET.fromstring(data)
     mydict = {child.tag:child.text for child in root}
 
-    # 添加日记
-    today=datetime.now()
-    newDiary=mydict['Content']
-    user_name=mydict['FromUserName']
 
-    with open('diary.txt', 'r+') as f:
-        content = f.read()
-        f.seek(0, 0)
-        newDiaryLine=today.strftime("%Y/%m/%d/ %T")+ '  ['+user_name+'] '+newDiary
-        f.write(newDiaryLine.rstrip('\r\n') + '\n' + content)
+    # 添加帮助
+    if mydict['Content'] =='help':
+        mydict['Content'] = '输入help可以看到帮助'
 
-    # 更新时间
-    import time
-    mydict['CreateTime'] = int(time.time())
-    # 更新回复内容
-    mydict['Content'] = mydict['Content']+'已保存'
+    elif mydict['Content'] =='read':
+        mydict['Content'] = '输入read可以看到帮助'
+
+    else:
+        # 添加日记
+        today=datetime.now()
+        newDiary=mydict['Content']
+        user_name=mydict['FromUserName']
+
+        with open('diary.txt', 'r+') as f:
+            content = f.read()
+            f.seek(0, 0)
+            newDiaryLine=today.strftime("%Y/%m/%d/ %T")+ '  ['+user_name+'] '+newDiary
+            f.write(newDiaryLine.rstrip('\r\n') + '\n' + content)
+
+        # 更新时间
+        import time
+        mydict['CreateTime'] = int(time.time())
+        # 更新回复内容
+        mydict['Content'] = mydict['Content']+'已保存'
 
 
     # 重构xml

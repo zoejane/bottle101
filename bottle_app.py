@@ -34,12 +34,6 @@ def checkSignature():
     else:
         return "error"
 
-# just for fun， 绕过复杂的服务器配置
-@route("/wechat")
-def checkSignature():
-    echostr = request.GET.get('echostr', None)
-    return echostr
-
 @route('/wechat', method="POST") # mypath需要跟微信公众号里注册的信息一致
 def check_signature():
     # 获取post请求body内容
@@ -64,7 +58,7 @@ def check_signature():
     else:
         # 添加日记
         today=datetime.now()
-        newDiary=mydict['Content']
+        newDiary=mydict['Content'].encode('UTF-8')
 
         with open('diary-wechat.txt', 'r+') as f:
             content = f.read()
@@ -76,7 +70,7 @@ def check_signature():
         import time
         mydict['CreateTime'] = int(time.time())
         # 更新回复内容
-        mydict['Content'] = mydict['Content']+'已保存'
+        mydict['Content'] = mydict['Content'].encode('UTF-8')+'已保存'
 
 
     # 重构xml

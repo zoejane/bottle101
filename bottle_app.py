@@ -46,13 +46,13 @@ def check_signature():
 
 
     # 添加帮助
-    if mydict['Content'].lower() =='help' or 'h' or '帮助':
+    if mydict['Content'] =='help':
         mydict['Content'] = '''
-输入“help”或者“帮助”可以看到帮助
-输入“read”或者“阅读”可以阅读历史日记
+        输入“help”或者“帮助”可以看到帮助
+        输入“read”或者“阅读”可以阅读历史日记
         '''
 
-    elif mydict['Content'].lower() =='read' or 'r' or '阅读':
+    elif mydict['Content'] =='read':
         diaryFile = open('diary-wechat.txt')
         diaryContent = diaryFile.read()
         diaryFile.close()

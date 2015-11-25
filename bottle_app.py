@@ -54,8 +54,10 @@ def check_signature():
     # 添加帮助
     if mydict['Content'].lower() =='help':
         mydict['Content'] = '''
-        输入“help”可以看到帮助
-        输入“read”可以阅读历史日记
+        这里是一个让你书写自己思绪的地方。
+        有什么话直接对我说就好啦，我会为你保存好的。
+        输入“help”可以看到帮助。
+        输入“read”可以阅读历史日记。
         '''
 
     # 添加阅读
@@ -83,7 +85,7 @@ def check_signature():
         import time
         mydict['CreateTime'] = int(time.time())
         # 更新回复内容
-        mydict['Content'] = mydict['Content'].encode('UTF-8')+'已保存'
+        mydict['Content'] = mydict['Content'].encode('UTF-8')+'-已保存'
 
 
     # 重构xml

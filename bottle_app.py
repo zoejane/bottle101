@@ -44,6 +44,8 @@ def check_signature():
     root = ET.fromstring(data)
     mydict = {child.tag:child.text for child in root}
 
+    user_name=mydict['FromUserName']
+    user_diary=str(user_name)+'.txt'
 
     # 添加帮助
     if mydict['Content'] =='help':
@@ -52,8 +54,9 @@ def check_signature():
         输入“read”或者“阅读”可以阅读历史日记
         '''
 
+    # 添加阅读
     elif mydict['Content'] =='read':
-        diaryFile = open('diary-wechat.txt')
+        diaryFile = open(user_diary)
         diaryContent = diaryFile.read()
         diaryFile.close()
         mydict['Content'] = diaryContent
@@ -63,7 +66,10 @@ def check_signature():
         today=datetime.now()
         newDiary=mydict['Content'].encode('UTF-8')
 
-        with open('diary-wechat.txt', 'r+') as f:
+        diaryFile = open(user_diary,'a')
+        diaryFile.close()
+
+        with open(user_diary, 'r+') as f:
             content = f.read()
             f.seek(0, 0)
             newDiaryLine=today.strftime("%Y/%m/%d/ %T")+ ' '+newDiary

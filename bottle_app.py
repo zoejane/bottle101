@@ -56,18 +56,20 @@ def check_signature():
         mydict['Content'] = '输入help可以看到帮助'
 
     elif mydict['Content'] =='read':
-        mydict['Content'] = '输入read可以看到帮助'
+        diaryFile = open('diary-wechat.txt')
+        diaryContent = diaryFile.read()
+        diaryFile.close()
+        mydict['Content'] = diaryContent
 
     else:
         # 添加日记
         today=datetime.now()
         newDiary=mydict['Content']
-        user_name=mydict['FromUserName']
 
-        with open('diary.txt', 'r+') as f:
+        with open('diary-wechat.txt', 'r+') as f:
             content = f.read()
             f.seek(0, 0)
-            newDiaryLine=today.strftime("%Y/%m/%d/ %T")+ '  ['+user_name+'] '+newDiary
+            newDiaryLine=today.strftime("%Y/%m/%d/ %T")+ ' '+newDiary
             f.write(newDiaryLine.rstrip('\r\n') + '\n' + content)
 
         # 更新时间

@@ -40,20 +40,4 @@ def writing():
     else:
         return template('new_diary.tpl')
 
-@diary.get("/")
-def checkSignature():
-    token = ""  # 你在微信公众平台上设置的TOKEN
-    signature = request.GET.get('signature', None)  
-    timestamp = request.GET.get('timestamp', None)
-    nonce = request.GET.get('nonce', None)
-    echostr = request.GET.get('echostr', None)
-    tmpList = [token, timestamp, nonce]
-    tmpList.sort()
-    tmpstr = "%s%s%s" % tuple(tmpList)
-    hashstr = hashlib.sha1(tmpstr).hexdigest()
-    if hashstr == signature:
-        return echostr
-    else:
-        return "wws:indentify error"
-
 run(diary,host='localhost', port=1234, debug=True)
